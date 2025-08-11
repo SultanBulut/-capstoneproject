@@ -18,7 +18,7 @@ EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 VOICE_MAPPING = {
-    "Anne": "ZT9u07TYPVl83ejeLakq"
+    "Anne": "ZT9u07TYPVl83ejeLakq",
     "Baba": "gfRt6Z3Z8aTbpLfexQ7N",
     "Genç Kız": "piI8Kku0DcvcL6TTSeQt",
     "Masal Anlatıcısı": "8dRG2ER7ThdAWJwK71hG"
