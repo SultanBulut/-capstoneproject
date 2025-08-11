@@ -19,10 +19,9 @@ EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 VOICE_MAPPING = {
     "Anne": "ZT9u07TYPVl83ejeLakq"
-    #"Baba": "gfRt6Z3Z8aTbpLfexQ7N",
-    #"Robot": "Dorothy",
-    #"Genç Kız": "piI8Kku0DcvcL6TTSeQt",
-    #"Masal Anlatıcısı": "8dRG2ER7ThdAWJwK71hG"
+    "Baba": "gfRt6Z3Z8aTbpLfexQ7N",
+    "Genç Kız": "piI8Kku0DcvcL6TTSeQt",
+    "Masal Anlatıcısı": "8dRG2ER7ThdAWJwK71hG"
 }
 
 def generate_story(theme, age, length, custom_prompt=""):
@@ -102,7 +101,7 @@ def main():
         </style>
     """, unsafe_allow_html=True)
 
-    st.title(":book: AI Story Generator")
+    st.title("📚FairyTeller AI")
     st.write("Yapay zeka ile kişiselleştirilmiş hikayeler yaratın!")
 
     
