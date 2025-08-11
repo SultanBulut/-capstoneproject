@@ -64,20 +64,20 @@ def load_text_and_chunk(file_path):
     return docs
 
 # Vektör veritabanını oluştur
-def create_vectorstore(docs, persist_directory="chroma_store"):
+def create_vectorstore(docs):
     vectordb = Chroma.from_documents(
         documents=docs,
         embedding=embedding,
-        persist_directory=persist_directory
+        #persist_directory=persist_directory
     )
     # Chroma persist() artık otomatik, bu satır opsiyonel
     # vectordb.persist()
     return vectordb
 
 # Var olan vektör veritabanını yükle
-def load_vectorstore(persist_directory="chroma_store"):
+def load_vectorstore():
     return Chroma(
-        persist_directory=persist_directory,
+        #persist_directory=persist_directory,
         embedding_function=embedding
     )
 
