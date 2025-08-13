@@ -85,38 +85,150 @@ def main():
     st.set_page_config(page_title="FairyTeller AI", page_icon="📚", layout="wide")
 
     st.markdown("""
-        <style>
-        .stApp { max-width: 1200px; margin: auto; }
-        .story-container {
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            background-color: #e0e0e0;
-            border: 1px solid #ccc;
-            white-space: pre-wrap;
-            font-size: 18px;
-            line-height: 1.5;
-            color: #000000;   
-        }
-        </style>
-    """, unsafe_allow_html=True)
+    <style>
+    .stApp { 
+        background-color: #2d4261; 
+    }
+
+    /* Ana container'ı da mavi yapalım */
+    .main .block-container {
+        background-color: #2d4261;
+        max-width: 100%;
+        padding: 1rem;
+    }
+    
+    .story-container {
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        background-color: #e0e0e0;
+        border: 1px solid #ccc;
+        white-space: pre-wrap;
+        font-size: 18px;
+        line-height: 1.5;
+        color: #000000;   
+    }
+
+    /* Selectbox ana kutu */
+    .stSelectbox > div > div > div {
+        background-color: #e0e0e0 !important;
+        color: #333333 !important;
+    }
+    
+    /* Dropdown menü arka planı */
+    div[data-baseweb="popover"] {
+        background-color: #e0e0e0 !important;
+    }
+    
+    /* Dropdown listesi */
+    ul[role="listbox"] {
+        background-color: #e0e0e0 !important;
+        border: 1px solid #ccc !important;
+    }
+    
+    /* Dropdown seçenekleri */
+    li[role="option"] {
+        background-color: #e0e0e0 !important;
+        color: #333333 !important;
+    }
+    
+    /* Hover durumunda */
+    li[role="option"]:hover {
+        background-color: #d0d0d0 !important;
+        color: #333333 !important;
+    }
+    
+    /* Seçili olan seçenek */
+    li[role="option"][aria-selected="true"] {
+        background-color: #c0c0c0 !important;
+        color: #333333 !important;
+    }
+    
+    /* Text input */
+    .stTextInput > div > div > input {
+        background-color: #e0e0e0 !important;
+        color: #333333 !important;
+    }
+    
+    /* Text area */
+    .stTextArea > div > div > textarea {
+        background-color: #e0e0e0 !important;
+        color: #333333 !important;
+    }
+    
+    /* Slider track */
+    .stSlider > div > div > div > div {
+        background-color: #e0e0e0 !important;
+    }
+    
+    /* File uploader - daha spesifik selektörler */
+    .stFileUploader > div {
+        background-color: #e0e0e0 !important;
+        border: 2px dashed #8c6475 !important;
+        border-radius: 10px !important;
+    }
+    
+    /* File uploader içindeki section */
+    .stFileUploader section {
+        background-color: #e0e0e0 !important;
+        border: none !important;
+    }
+    
+    /* File uploader yazıları */
+    .stFileUploader section > div {
+        color: #333333 !important;
+    }
+    
+    /* File uploader button */
+    .stFileUploader button {
+        background-color: #8c6475 !important;
+        color: white !important;
+        border: 1px solid #d494b3 !important;
+    }
+
+    /* Label yazılarını beyaz yap (file uploader hariç) */
+    label {
+        color: white !important;
+        font-weight: bold;
+    }
+    
+    /* File uploader label özel */
+    .stFileUploader label {
+        color: white !important;
+    }
+
+    /* Tüm butonlar aynı renk */
+    .stButton>button, .stDownloadButton>button {
+        background-color: #8c6475 !important;
+        color: white !important; 
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-weight: bold;
+        border: 2px solid #d494b3;
+    }    
+    
+    .css-1d391kg {
+        background-color: #2d4261;
+    }                            
+    </style>
+""", unsafe_allow_html=True)
 
     st.title("📚FairyTeller AI")
-    st.write("Yapay zeka ile kişiselleştirilmiş hikayeler yaratın!")
+    st.write("Yapay zeka ile kişiselleştirilmiş hikayeler yaratın!✨🧚‍♀️🌈")
 
     
-    tab1, tab2, tab3 = st.tabs(["Klasik Hikaye Oluşturma", "Eğitim Bilgisine Dayalı Hikaye", "Akıllı Hikaye Gönderimi"])
+    tab1, tab2, tab3 = st.tabs(["Klasik Hikaye Oluşturma 📚✨🧚‍♀️", "Eğitim Bilgisine Dayalı Hikaye 📘📝🌟", "Akıllı Hikaye Gönderimi 📩🤖💌"])
 
     with tab1:
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("### Hikaye Ayarları")
             theme = st.selectbox(
-                "Hikaye Teması Seçin",
+                "📖🎭 Hikaye Teması Seçin",
             ["Macera", "Fantastik", "Bilim Kurgu", "Romantik", "Ahlaki Hikaye",
              "Peri Masalı", "Gizem", "Eğitici", "Tarihi", "Komedi", "Hayvan Hikayesi"]
             )
-            age = st.slider("Yaş Seçin", 3, 10, 6)
+            age = st.slider("👶👧🧒 Yaş Seçin", 3, 10, 6)
 
         with col2:
             st.markdown("### Hikaye Uzunluğu & Ses")
@@ -127,8 +239,8 @@ def main():
             length = 300 if story_length_choice ==  "Kısa" else 600
             voice_style = st.selectbox("🔊 Ses Tarzı Seçin:", list(VOICE_MAPPING.keys()))
 
-        st.markdown("### Hikayenizi Özelleştirin")
-        custom_prompt = st.text_area("Yaratıcı öğeler ekleyin (isteğe bağlı)")
+        st.markdown("### Hikayenizi Özelleştirin 💫")
+        custom_prompt = st.text_area("Yaratıcı öğeler ekleyin (isteğe bağlı)🎨🖌️")
 
         if "story" not in st.session_state:
             st.session_state.story = ""
@@ -136,7 +248,7 @@ def main():
             st.session_state.audio_path = ""
 
         if st.button("✨ Hikaye Oluştur", use_container_width=True):
-            with st.spinner("Crafting your magical story..."):
+            with st.spinner("Hikayeniz hazırlanıyor..."):
                 st.session_state.story = generate_story(theme, age, length, custom_prompt)
                 st.session_state.audio_path = ""
 
@@ -146,7 +258,7 @@ def main():
             st.download_button("📥  Hikayeyi İndir", st.session_state.story, file_name=f"{theme.lower()}_story.txt")
 
             if st.button("🔊 Hikayeyi Dinle", use_container_width=True):
-                with st.spinner("Generating voice..."):
+                with st.spinner(" Ses oluşturuluyor..."):
                     st.session_state.audio_path = generate_tts(st.session_state.story, VOICE_MAPPING[voice_style])
 
             
@@ -179,10 +291,10 @@ def main():
 
     with tab3:
         st.header("📩 Hikaye Oluştur ve Mail Gönder")
-        agent_theme = st.selectbox("Hikaye Teması",["Macera", "Fantastik", "Bilim Kurgu", "Romantik",
+        agent_theme = st.selectbox("📖🎭 Hikaye Teması",["Macera", "Fantastik", "Bilim Kurgu", "Romantik",
                                                   "Ahlaki Hikaye", "Peri Masalı", "Gizem", "Eğitici",
                                                   "Tarihi", "Komedi", "Hayvan Hikayesi"])
-        agent_email = st.text_input("Gönderilecek E-posta Adresi")
+        agent_email = st.text_input("✉️ Gönderilecek E-posta Adresi")
         if st.button("📖 Hikaye Oluştur ve Gönder"):
             if agent_email:
                 with st.spinner("Özel hikayeniz hazırlanıyor.."):
