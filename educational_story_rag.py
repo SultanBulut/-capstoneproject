@@ -74,12 +74,7 @@ def create_vectorstore(docs):
     # vectordb.persist()
     return vectordb
 
-# Var olan vektör veritabanını yükle
-def load_vectorstore():
-    return Chroma(
-        #persist_directory=persist_directory,
-        embedding_function=embedding
-    )
+
 
 # Hikaye üret
 def generate_story_from_docs(user_question, vectordb):
