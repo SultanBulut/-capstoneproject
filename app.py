@@ -159,8 +159,15 @@ def main():
         uploaded_file = st.file_uploader("📄 Eğitim içeriği (TXT veya PDF) yükleyin", type=["txt", "pdf"])
         topic = st.text_input("📚 Konu başlığı (örn: Güneş Sistemi, Deprem vb.):")
 
-        if uploaded_file and topic:
-            if st.button("✨ Hikayeyi Oluştur"):
+        # Buton her zaman görünür olsun
+        if st.button("✨ Hikayeyi Oluştur"):
+            # Kontrol: ikisi de dolu mu?
+            if not uploaded_file:
+                st.error("⚠️ Lütfen bir dosya yükleyin!")
+            elif not topic.strip():
+                st.error("⚠️ Lütfen konu başlığı girin!")
+            else:
+                # İkisi de varsa hikaye oluştur
                 with st.spinner("Hikaye oluşturuluyor..."):
                     try:
                         story = generate_story_from_uploaded_file(uploaded_file, topic)
@@ -176,9 +183,9 @@ def main():
                                                   "Ahlaki Hikaye", "Peri Masalı", "Gizem", "Eğitici",
                                                   "Tarihi", "Komedi", "Hayvan Hikayesi"])
         agent_email = st.text_input("Gönderilecek E-posta Adresi")
-        if st.button("Agent’ı Çalıştır"):
+        if st.button("📖 Hikaye Oluştur ve Gönder"):
             if agent_email:
-                with st.spinner("Agent çalışıyor, lütfen bekleyin..."):
+                with st.spinner("Özel hikayeniz hazırlanıyor.."):
                     import email_agent  # agent fonksiyonlarını içeren modül
                     try:
                         result = email_agent.run_email_agent(agent_theme, agent_email)

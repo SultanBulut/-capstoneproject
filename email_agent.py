@@ -11,7 +11,7 @@ llm = ChatGoogleGenerativeAI(
 )
 
 def generate_story_tool_func(theme):
-    prompt = f"{theme} temalı kısa bir hikaye oluştur."
+    prompt = f""" {theme} temalı çocuklara yönelik kısa bir hikaye oluştur. 300-400 kelime uzunluğunda, 5-12 yaş grubu için uygun olsun. """
     # Burada istersen llm.generate veya başka şekilde çağırabilirsin
     # Basit örnek olarak llm kullanıyoruz:
     return llm.predict(prompt)
