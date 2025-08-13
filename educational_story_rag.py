@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 import asyncio
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import FAISS
 
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -46,6 +46,8 @@ prompt_template = """
 Aşağıdaki bilgileri kullanarak, {topic} hakkında çocuklara yönelik eğlenceli ve öğretici bir hikaye yaz:
 
 {context}
+
+Hikaye çocukların anlayabileceği basit bir dille yazılmalı ve öğretici olmalıdır.
 """
 
 prompt = PromptTemplate(
@@ -63,18 +65,13 @@ def load_text_and_chunk(file_path):
     docs = text_splitter.create_documents([text])
     return docs
 
-# Vektör veritabanını oluştur
+# Vektör veritabanını oluştur (FAISS)
 def create_vectorstore(docs):
-    vectordb = Chroma.from_documents(
+    vectordb = FAISS.from_documents(
         documents=docs,
-        embedding=embedding,
-        #persist_directory=persist_directory
+        embedding=embedding
     )
-    # Chroma persist() artık otomatik, bu satır opsiyonel
-    # vectordb.persist()
     return vectordb
-
-
 
 # Hikaye üret
 def generate_story_from_docs(user_question, vectordb):
@@ -99,20 +96,25 @@ def generate_story_from_uploaded_file(uploaded_file, topic):
         loader = TextLoader(tmp_path, encoding="utf-8")
     else:
         os.remove(tmp_path)
-        raise ValueError("Desteklenmeyen dosya formatı!")
+        raise ValueError("Desteklenmeyen dosya formatı! Sadece PDF ve TXT dosyaları desteklenmektedir.")
 
-    # Belgeleri yükle ve böl
-    docs = loader.load()
-    text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=50)
-    chunks = text_splitter.split_documents(docs)
+    try:
+        # Belgeleri yükle ve böl
+        docs = loader.load()
+        text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+        chunks = text_splitter.split_documents(docs)
 
-    # Vektör veritabanı oluştur
-    vectordb = create_vectorstore(chunks)
+        # Vektör veritabanı oluştur (FAISS)
+        vectordb = create_vectorstore(chunks)
 
-    # Hikaye üret
-    story = generate_story_from_docs(topic, vectordb)
+        # Hikaye üret
+        story = generate_story_from_docs(topic, vectordb)
 
-    # Temp dosyayı sil
-    os.remove(tmp_path)
-
-    return story
+        return story
+        
+    except Exception as e:
+        raise Exception(f"Hikaye oluşturulurken hata oluştu: {str(e)}")
+    finally:
+        # Temp dosyayı sil
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
